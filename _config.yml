@@ -25,7 +25,7 @@ sidebar_categories:
     - batching
     - validation
     - introspection
-github_repo: apollostack/graphql-guide
+github_repo: apollostack/graphql-docs
 content_root: source
 
 logo:
@@ -43,14 +43,14 @@ nav_links:
     partial: illustration-compass
     target: _new
   'GraphQL':
-    url: http://docs.apollo-stack.com/graphql
+    url: http://docs.apollostack.com/graphql
     partial: illustration-compass
     active: true
   'Client':
-    url: http://docs.apollo-stack.com/client
+    url: http://docs.apollostack.com/client
     partial: illustration-compass
   'Server':
-    url: http://docs.apollo-stack.com/server
+    url: http://docs.apollostack.com/server
     partial: illustration-compass
   'GitHub':
     url: https://github.com/apollostack
