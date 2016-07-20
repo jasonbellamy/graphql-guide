@@ -103,7 +103,7 @@ You can read more about resolvers in our article on [the subject](resolvers.html
 
 On the client, you construct GraphQL [queries](queries.html) that are sent to the GraphQL server. Typically you co-locate those queries with the user interface components for whom they are supplying data. This is a very different way to do it compared to a query defined in a server-side data endpoint!
 
-Although you could simply send the query yourself over HTTP to a GraphQL server, and manually deal with the results, on the client you typically use a GraphQL client library, such as [Apollo Client](http://docs.apollostack.com/client) or [Relay](https://facebook.github.io/relay/) to manage your queries and cache their results. Due to the structured nature of GraphQL data and the introspection properties allowed by GraphQL servers, GraphQL clients are able to perform many complex optimizations that wouldn't otherwise be possible.
+Although you could simply send the query yourself over HTTP to a GraphQL server, and manually deal with the results, on the client you typically use a GraphQL client library, such as [Apollo Client](http://docs.apollostack.com/client) or [Relay](https://facebook.github.io/relay/) to manage your queries and cache their results. Due to the structured nature of GraphQL data and the introspection  allowed by GraphQL servers, GraphQL clients are able to perform many complex optimizations that wouldn't otherwise be possible.
 
 <h2 id="what-is-apollo">What is Apollo?</h2>
 
