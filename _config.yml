@@ -34,23 +34,23 @@ logo:
 favicon: logo/favicon.png
 
 nav_links:
-  'Project':
+  'Apollo Project':
     url: http://www.apollostack.com/
     partial: illustration-guide
     target: _new
-  'Blog':
+  'Apollo Blog':
     url: https://medium.com/apollo-stack
     partial: illustration-compass
     target: _new
-  'GraphQL':
-    url: http://docs.apollostack.com/graphql
+  'GraphQL Guide':
+    url: http://docs.apollo-stack.com/graphql
     partial: illustration-compass
     active: true
-  'Client':
-    url: http://docs.apollostack.com/client
+  'Apollo Client':
+    url: http://docs.apollo-stack.com/client
     partial: illustration-compass
-  'Server':
-    url: http://docs.apollostack.com/server
+  'Apollo Server':
+    url: http://docs.apollo-stack.com/server
     partial: illustration-compass
   'GitHub':
     url: https://github.com/apollostack
