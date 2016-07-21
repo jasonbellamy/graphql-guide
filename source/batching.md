@@ -1,4 +1,4 @@
 ---
-title: Fragments
+title: Batching
 order: 8
 ---

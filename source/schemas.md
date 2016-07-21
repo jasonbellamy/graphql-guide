@@ -43,7 +43,7 @@ schema {
 
 In this example the three object types `Query`, `Mutation` and `Subscription` would be defined elsewhere. The names of those types can be anything, but it's sensible to pick the names above.
 
-The *fields* of those types define the actual entrypoints or instances of that operation that are available. Each GraphQL document (combination of queries, mutations and subscriptions) must include at least one of those operation entrypoints. So, we could define the `Query` type above as:
+The *fields* of those types define the actual entry points or instances of that operation that are available. Each GraphQL document (combination of queries, mutations and subscriptions) must include at least one of those operation entry points. So, we could define the `Query` type above as:
 
 ```
 type Query {
