@@ -90,12 +90,143 @@ We include a `user` field which is parameterized by the `id` argument of type `I
 
 <h3 id="scalars">Scalars</h3>
 
-<h3 id="input-objects">Input Objects</h3>
+Scalars types are where the actual data of the type system lives. Although you can introduce your own scalar types into your schema, GraphQL ships with a collection of default scalar types:
+
+ - `Int` - representing an Integer
+ - `Float` - representing a Floating point number
+ - `String` - A string of characters
+ - `Boolean` - A `true`/`false` value
+ - `ID` - An identifier -- a string that is used for data identification
+
+When you declare a field of an object type to be a scalar type, it becomes an "end point" for a GraphQL query.
+
+<h3 id="non-nulls">Non-null types</h3>
+
+By default, all types in GraphQL can be represented by `null`, to indicate a missing value or error fetching a specific piece of data. In particular when an object type returns `null`, no data will be returned for sub-fields.
+
+You can declare specific fields to be a "non-null type", which is a wrapper around another type that indicates that a `null` value is *not* allowed.
+
+In the schema language, you can represent a non-null type by appending `!` after it:
+
+```
+# a person must have an id and name, but the avatar is optional
+type Person {
+  _id: ID!
+  name: String!
+  avatar: String
+}
+```
+
+<h3 id="arrays">Array types</h3>
+
+Typically, it's useful to have fields which are lists of objects or scalars. To do so, you can create another wrapper type, an array type. You can represent an array type in the schema language by surrounding an existing type with `[]`.
+
+```
+# a person has a list of persons for the `friends` field:
+type Person {
+  friends: [Person]
+}
+```
+
+<h3 id="input-objects">Input Arguments and Objects</h3>
+
+When you create a parameterized field, in simpler cases, the argument(s) to the field will be basic scalar or [enum types](#enums). You can also define default values for those types in your schema. In the schema language you can use `= value` to do so:
+
+```
+type Person {
+  avatar(size: Int = 100): String
+}
+```
+
+In some cases, the arguments will be complex enough to justify creating an input object type, which allows complex arguments that are validated by the type system.
+
+An input object type is just like an object type, except it may not use [interfaces](#interfaces), [unions](#unions) or circular references to the same input object type.
+
+For example, if we wanted to jazz up our `avatar` field on `Person`, we could take a variety of arguments:
+
+```
+input AvatarOptions {
+  format: String
+  filter: String
+}
+
+type Person {
+  avatar(size: Int = 100, options: AvatarOptions): String
+}
+```
 
 <h2 id="advanced">Advanced Schemas</h2>
 
+With the above basics you can get started building schemas, but there are some extra features that will help you get the most out of your GraphQL schemas.
+
 <h3 id="enums">Enumerations</h3>
+
+When you have a scalar type that takes it value from a set list of values, it make sense to use an enumerated type. This often makes the most sense for an input argument. To continue our avatar example:
+
+```
+enum ImageFormat {
+  JPG
+  PNG
+  GIF
+}
+
+input AvatarOptions {
+  format: ImageFormat
+}
+```
+
+It's not required, but by convention, you should use uppercase names for the enum values.
 
 <h3 id="interfaces">Interfaces</h3>
 
+You can achieve polymorphism in your type system by using an interface. You can set a field on an object type to be an interface, which is an *abstract* type that is fulfilled by one or more other object types. It more or less corresponds exactly the concept in a object-oriented programming language.
+
+For example, in schema language:
+
+```
+interface FeedItem {
+  title: String
+}
+
+interface Location {
+  latitude: String
+  longitude: String
+}
+
+type Photo implements FeedItem {
+  title: String
+  url: String
+}
+
+type Event implements FeedItem, Location {
+  title: String
+  latitude: String
+  longitude: String
+}
+
+type User {
+  lastActivity : FeedItem
+}
+```
+
 <h3 id="unions">Unions</h3>
+
+A union type is simply an option between one or more other types. This means that a field on an object can return one of several options depending on the specific object returned.
+
+```
+type Person {
+  firstName: String
+  lastName: String
+}
+
+type Company {
+  name: String
+  location: Location
+}
+
+union Contact = Person | Company
+
+type AddressBook {
+  contacts: [Contact]
+}
+```
