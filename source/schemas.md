@@ -9,19 +9,23 @@ The starting point to any GraphQL stack is defining the schema. The GraphQL sche
 
 There are many [GraphQL server libraries](servers.html) available, in many different programming languages, and the way you construct your schema will depend on the library you are using. However, there is a also a semi-official shorthand ["schema language"](https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png) which, although it doesn't support all GraphQL schema features, provides a language agnostic way to describe schemas.
 
-Typically you would not write you application's schema in the schema language (although the reference JavaScript implementation does allow you to, and it can be useful for prototyping); however its is useful for our examples to use it. Translating it to your server implementation's schema constructors should be reasonably mechanical.
+Typically you would not write you application's schema in the schema language (although the reference JavaScript implementation does allow you to, and it can be useful for prototyping); it is useful for our examples to use it. Translating it to your server implementation's schema constructors should be reasonably mechanical.
 
 <h2 id="basics">Schema Basics</h2>
 
 A GraphQL schema is in essence the definition of a type system--how the data available to you client is related and what queries can be made to retrieve it. Additionally it describes the mutations available (and the data they can return).
 
-A schema is constructed of a set of [objects](#objects) types--which are maps of named [fields](#fields), each of which is another type, either another object, or a [scalar](#scalar) base type. You can think of the object types as the nodes in the type system's "graph" and the scalar types as leaves (technically nodes of degree one).
+A schema is constructed of a set of [object](#objects) types--which are maps of named [fields](#fields), each of which is another type, either another object, or a [scalar](#scalar) base type. You can think of the object types as the nodes in the type system's "graph" and the scalar types as leaves (technically nodes of degree one).
+
+A GraphQL schema is directly analogous to (and in many implementations actually is) a set of classes in a object-oriented programming language. Each class (or "object type") has a set of properties and methods (or "fields") that may be (or return) simple scalars or other class instances. Unsurprisingly, the analogy extends, and other object-oriented concepts, such as [type interfaces](#interfaces) and [union types](#unions) apply.
+
+When thinking about a schema, it's useful to remember what a GraphQL query does: it _starts_ at a given [operation](#operations), and walks a (tree-like) path through the type system, choosing one or more fields from each object type that it encounters.
 
 <h3 id="operations">Operations</h3>
 
 The entry points to a schema (the fields of the `schema` object) are the three kinds of operation available:
 
- - All schemas must have `query` object type whose fields are the set of queries endpoints of your application.
+ - All schemas must have `query` object type whose fields are the set of query endpoints of your application.
 
  - A schema may optionally have `mutation` object type, whose fields are the set of mutations available.
 
