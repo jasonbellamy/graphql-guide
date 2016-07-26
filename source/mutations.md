@@ -37,7 +37,7 @@ This mutation will return something like:
 
 The big difference between the above and a similar-shaped query is in the semantics: a query should be *idempotent* and *side-effect-free* (i.e. you can run it many times without changing anything), whereas a mutation is very much not.
 
-<h2 id="defining-mutations">Defining Mutations</h2>
+<h2 id="defining">Defining Mutations</h2>
 
 Mutations are defined in a schema in a very similar way to queries; you simply attach them as fields of the the `Mutation` [operation type](schemas.html#operations). In the schema language, you might write something like:
 
@@ -73,7 +73,7 @@ schema {
 }
 ```
 
-<h3 id="serving-mutations">Serving Mutations</h3>
+<h2 id="serving">Serving Mutations</h2>
 
 Mutations are typically transported over the same [network layer](queries.html#network-layer) as queries, and use the same underlying protocol (such as HTTP).
 
