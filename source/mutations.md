@@ -5,9 +5,9 @@ order: 3
 
 You use queries to fetch data in GraphQL; when you want to modify data you use a **mutation**.
 
-In the first instance, a mutation is simply a named RPC (remote procedure call), basically equivalent to a data modification API in many other systems (such as REST).
+In the first instance, a mutation is simply a named RPC (remote procedure call), basically equivalent to a data modification API in many other systems such as REST.
 
-Where things get interesting in GraphQL is considering the *return value* of a mutation. In most applications, a mutating API will return a minimal amount of data to client, which--if the client needs to find out what's changed as a result of the mutation, which it typically does--will require a second request from the client to fetch the changed data.
+Where things get interesting in GraphQL is considering the *return value* of a mutation. In most applications, a mutating API will return a minimal amount of data to the client, which--if the client needs to find out what's changed as a result of the mutation, which it typically does--will require a second request to fetch the changed data.
 
 In some cases, mutating APIs are expanded to return a set of data to the caller; however it's not generally possible to know exactly what data any caller will need, which may mean the API endpoint returns *too much* data. We can see exactly the same over/underfetching problem that [motivated](index.html#motivation) GraphQL in the first place--and the solution is the same: to allow the caller to exactly the data needed after the mutation is done.
 
@@ -77,6 +77,6 @@ schema {
 
 Mutations are typically transported over the same [network layer](queries.html#network-layer) as queries, and use the same underlying protocol (such as HTTP).
 
-Also server implementations typically *resolve* mutations in the same way as queries. Again, the main difference is in semantics; unlike other resolvers, resolvers of a mutation are *expected* to modify data, rather than just query for it.
+Also server implementations typically *resolve* mutations in the [same way as queries](queries.html#query-resolution). Again, the main difference is in semantics; unlike other resolvers, resolvers of a mutation are *expected* to modify data, rather than just query for it.
 
-Like any other resolver, a mutation should return the data pertaining to the type that it returns: in the case where the mutation is mapped to the root query type, it would return nothing at all.
+Like any other resolver, a mutation resolver should return the data pertaining to the type that it returns: in the case where the mutation is mapped to the root query type, it would return nothing at all.
