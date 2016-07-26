@@ -50,7 +50,7 @@ GraphQL consists of three kinds of operation that you can perform against your s
 
 When you create your schema, the starting points are the ["operation types"](schemas.html#operations) that define the starting points of the three kinds of operations.
 
-A GraphQL query begins with the kind of operation (`query`, `mutation` or `subscription`), a name for this particular operation, followed by any variables or directives that apply to this operation (see [below](#variables)), and then the shape of the data to be returned:
+A GraphQL operation begins with the kind of operation (`query`, `mutation` or `subscription`), a name for this particular operation, followed by any variables or directives that apply to this operation (see [below](#variables)), and then the shape of the data to be returned:
 
 ```
 query myFeed {
