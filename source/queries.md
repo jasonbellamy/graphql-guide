@@ -39,12 +39,21 @@ Becomes something like:
 
 For the mathematically inclined, if you think of the type system entailed in the schema as a *directed graph*, then a query is simply a set of walks through the graph all starting at a common point (a single [operation entry point](schemas.html#operations)). Such a collection of walks then forms a tree (or the "graph" above).
 
-<h2 id="documents">Query Documents</h2>
+<h2 id="operations">Operations</h2>
 
-When you send operations (queries, mutations or subscriptions) to the GraphQL server, you send a group of one or more in a single GraphQL "query document". As each operation will return it's own set of results (and possibly errors), you must name each operation and provide its operation type.
+GraphQL consists of three kinds of operation that you can perform against your server:
+  - a **query** to fetch a fixed set of data.
+  - a **mutation** to modify something and get back a changed set of data.
+  - and a **subscription** to subscribe to changes to a set of data.
+
+> Subscriptions are still a draft part of the specification, but we'll document them here.
+
+When you create your schema, the starting points are the ["operation types"](schema.html#operations) that define the starting points of the three kinds of operations.
+
+A GraphQL query begins with the kind of operation (`query`, `mutation` or `subscription`), a name for this particular operation, followed by any variables or directives that apply to this operation (see [below](#variables)), and then the shape of the data to be returned:
 
 ```
-query Feed {
+query myFeed {
   me {
     feed {
       name
@@ -61,7 +70,9 @@ mutation likeActivity {
 }
 ```
 
-However, if you are just sending a single operation without variables or directives, you can leave out the name, and if it is a `query`, you can leave that keyword out too:
+> The name of the operation is optional, however it's generally useful for debugging purposes.
+
+If you are just sending a single `query` operation (a query) without a name, variables or directives, you can leave out the `query` keyword too:
 
 ```
 {
@@ -74,7 +85,7 @@ However, if you are just sending a single operation without variables or directi
 }
 ```
 
-We'll tend to write queries in this form throughout this guide.
+We'll tend to write queries in this form throughout this guide, for simplicity.
 
 > Mutations and subscriptions have different semantics (mutations cause side effects, subscriptions return more than the initial result), but all three types of operations are identical in that they return a "graph" of results. In this article we'll focus on queries, and consider the other operations in later articles, but keep in mind that everything that applies to queries apply to the other two operations also.
 
@@ -135,7 +146,7 @@ When the a field is [parameterized](schema.html#fields), the query must specify 
 
 You can construct your query string dynamically in and hardcode in such constant values, but typically you would instead use a *static* query (i.e. the same query for different situations) and pass *variables* into it.
 
-> When you are using variables in you query, you can't use the [single query shorthand](#documents).
+> When you are using variables in you query, you can't use the [single query shorthand](#operations).
 
 ```
 query getUser($id: ID){
@@ -149,17 +160,17 @@ Then, when you pass the query to the GraphQL server, you provide a value for `$i
 
 <h2 id="execution">Executing Queries</h2>
 
-When thinking about GraphQL queries, it's useful to keep in mind, at least abstractly, how they are evaluated by the server that is servicing the documents. Although the details of exactly how it works differs by [implementation](servers.html), the basic approach of resolving queries is dictated by the specification.
+When thinking about GraphQL queries, it's useful to keep in mind, at least abstractly, how they are evaluated by the server that is servicing the queries. Although the details of exactly how it works differs by [implementation](servers.html), the basic approach of resolving queries is dictated by the specification.
 
 <h3 id="network-layer">Network Layer</h3>
 
 Although it's not strictly part of the GraphQL spec, typically what happens when a query is made is that request is made over some kind of network connection, usually HTTP (although when dealing with [subscriptions](subscriptions), different, bidirectional transports may be involved).
 
-An app's user interface will kick off a query on a GraphQL client, which will construct a [GraphQL Query Document](#documents) and make a request to the server's GraphQL endpoint. The server will take that request, resolve it, and then return the data on the response to the request. Most implementations currently use the JSON format for that response, which is why use that in our examples, although that is by no means required.
+An app's user interface will kick off a query on a GraphQL client, which will construct a [GraphQL operation](#operations) and make a request to the server's GraphQL endpoint. The server will take that request, resolve it, and then return the data on the response to the request. Most implementations currently use the JSON format for that response, which is why use that in our examples, although that is by no means required.
 
 <h3 id="query-resolution">Query Resolution</h3>
 
-When the server receives the document, it executes the separate queries contained within in. Queries can be executed in any order or in parallel, but mutations must be executed serially.
+When the server receives the operation, it executes the separate queries contained within in. Queries can be executed in any order or in parallel, but mutations must be executed serially.
 
 To execute a query, a server must recursively *resolve* each field of each object. When you write a schema, you provide a set of *resolvers* alongside your type definitions. Those resolvers codify how to fetch the value for any given field of a type.
 
