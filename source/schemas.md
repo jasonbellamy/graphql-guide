@@ -64,7 +64,7 @@ For example, we could define the `User` type above:
 ```
 type User {
   name: String
-  avatar: String
+  avatar(size: String): String
   friends: [User]
 }
 ```
@@ -86,7 +86,7 @@ type Query {
 We include a `user` field which is parameterized by the `id` argument of type `ID`.
 
 > Although it is typical that the fields of the query operation's type are parameterized (after all, they are queries), it's important to remember that *any* field on *any* object type can be parameterized.
-> For instance, the `avatar` field on the `User` type above could have been parameterized to take a `size: Int` argument.
+> For instance, the `avatar` field on the `User` type has been parameterized to take a `size: Int` argument.
 
 <h3 id="scalars">Scalars</h3>
 
@@ -127,6 +127,9 @@ type Person {
   friends: [Person]
 }
 ```
+
+> As Arrays are just wrappers around other types and other types are nullable by default, a type of `[Person]` can include null values. To avoid this you can write `[Person!]`. If you want to ensure the array exists, you'd add `[Person!]!`.
+> You can keep wrapping wrapped types in this fashion, if you want to return an array of arrays for instance.
 
 <h3 id="input-objects">Input Arguments and Objects</h3>
 
