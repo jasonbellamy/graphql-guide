@@ -3,11 +3,11 @@ title: Introduction
 order: 0
 ---
 
-Welcome to Apollo's GraphQL Guide. This guide is intended to provide an introduction to [GraphQL](http://graphql.org)--the next generation app data query language.
+Welcome to Apollo's GraphQL Guide. This guide provides an introduction to [GraphQL](http://graphql.org)--the next generation app data query language.
 
 <h2 id="what-is-graphql">What is GraphQL?</h2>
 
-GraphQL was designed (and has been actively used) by Facebook in 2012 to provide a common interface for data for their mobile and web applications. GraphQL is optimized for the type of data that is typically needed by such applications; data that is hierarchical (a "graph") and which is queried directly from a client application.
+GraphQL was designed (and has been actively used) by Facebook in 2012 to provide a common data interface for their mobile and web applications. GraphQL is optimized for the type of data that is typically needed by such applications; data that is hierarchical (a "graph") and which is queried directly from a client application.
 
 A GraphQL query looks like:
 
