@@ -1,3 +1,5 @@
+NOTE: This content lives at graphql.org now.
+
 # docs
 
 To run:
